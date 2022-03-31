@@ -1,0 +1,52 @@
+plugins {
+	id 'org.springframework.boot' version '2.6.5'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	//region Spring
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	implementation('org.springframework.boot:spring-boot-configuration-processor:2.2.1.RELEASE')
+	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '2.2.1.RELEASE'
+//	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-mongodb', version: '2.2.1.RELEASE'
+	//endregion
+
+
+	//region Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	//endregion
+
+	testImplementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.2.3'
+
+	implementation group: 'org.telegram', name: 'telegrambots-spring-boot-starter', version: '4.4.0.2'
+	implementation group: 'com.vdurmont', name: 'emoji-java', version: '5.1.1'
+
+
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+		exclude group: "com.vaadin.external.google", module:"android-json"
+	}
+
+
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
