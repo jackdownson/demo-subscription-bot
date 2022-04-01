@@ -9,3 +9,7 @@ telegram:
   api-request: "https://api.telegram.org/bot"
   chat:
     id: "-1001502272659"
+
+java:
+  runtime:
+    version: 11
