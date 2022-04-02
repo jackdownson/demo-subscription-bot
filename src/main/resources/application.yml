@@ -5,7 +5,7 @@ server:
 telegram:
   botToken: "5278510472:AAGfDAPhkInDdKUra0e4CkpV2hnK40R_4Kk"
   botName: "sogr_bot"
-  webhookPath: "https://edaf-188-32-209-237.ngrok.io"
+  webhookPath: "https://sogresh-bot.herokuapp.com/"
   api-request: "https://api.telegram.org/bot"
   chat:
     id: "-1001502272659"
