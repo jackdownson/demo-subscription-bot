@@ -87,9 +87,9 @@ public class GetChatMemberUseCase {
 
     private String generateStringMessage(FeedbackType feedbackType)  {
         if (feedbackType.equals(FeedbackType.POSITIVE)) {
-            return messageSource.getMessage("positive-feedback", new Object[]{"{coupon}"}, Locale.ENGLISH);
+            return messageSource.getMessage("positive-feedback", new Object[]{"monbon_telegram"}, Locale.ENGLISH);
         } else {
-            return messageSource.getMessage("negative-feedback", new Object[]{"@sogr_channel"}, Locale.ENGLISH);
+            return messageSource.getMessage("negative-feedback", new Object[]{"@macaron_monbon"}, Locale.ENGLISH);
         }
     }
 

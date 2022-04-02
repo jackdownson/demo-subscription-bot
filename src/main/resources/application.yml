@@ -3,12 +3,12 @@ server:
 
 
 telegram:
-  botToken: "5278510472:AAGfDAPhkInDdKUra0e4CkpV2hnK40R_4Kk"
-  botName: "sogr_bot"
+  botToken: "5175383932:AAFkBSFTUQSU4o1o9Q4nIspzgOTMhJqIG1k"
+  botName: "Mon_Bon_Bot"
   webhookPath: "https://sogresh-bot.herokuapp.com/"
   api-request: "https://api.telegram.org/bot"
   chat:
-    id: "-1001502272659"
+    id: "-1001688280930"
 
 java:
   runtime:
