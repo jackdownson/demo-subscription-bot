@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @PropertySource("classpath:application.yml")
 @Component
-
 public class BotConfig {
     @Value("${telegram.webhookPath}")
     private String webhookPath;
