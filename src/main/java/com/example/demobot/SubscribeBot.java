@@ -28,8 +28,9 @@ public class SubscribeBot extends TelegramWebhookBot {
 
     @Override
     public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+
         if (update.getMessage() != null && update.getMessage().hasText()) {
-            return  bot.handleMessage(update);
+            return  bot.checkIfUserIsSubscribed(update);
         }
             return new SendMessage();
     }

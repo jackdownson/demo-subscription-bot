@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class User {
+public class BotUserDto {
 
     private String chat_id;
     private String user_id;

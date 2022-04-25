@@ -1,6 +1,30 @@
 server:
   port: 5000
+  servlet:
+    context-path: /
 
+logging:
+  level:
+    web: TRACE
+
+spring:
+  datasource:
+#    type: com.zaxxer.hikari.HikariDataSource
+    url: jdbc:postgresql://localhost:5433/postgres
+    username: postgres
+    password: postgres
+#    hikari:
+#      minimum-idle: 10
+#      maximum-pool-size: 60
+#      idle-timeout: 600000
+#      connection-test-query: SELECT 1
+  jpa:
+    hibernate:
+      ddl-auto: none
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQL95Dialect
 
 telegram:
   botToken: "5175383932:AAFkBSFTUQSU4o1o9Q4nIspzgOTMhJqIG1k"
@@ -9,6 +33,7 @@ telegram:
   api-request: "https://api.telegram.org/bot"
   chat:
     id: "-1001688280930"
+    name: "@macaron_monbon"
 
 java:
   runtime:
