@@ -70,7 +70,7 @@ public class SubscribedFeedback implements FeedbackService {
             return messageSource.getMessage("positive-feedback", new Object[]{promocode}, Locale.ENGLISH);
 
         } else if (feedbackType.equals(FeedbackType.ALREADY_HAS_PROM)) {
-            Promocode promocode = promocodeRepository.findPromocodeByTelegramId(String.valueOf(update.getMessage().getChatId()));
+            String promocode = promocodeRepository.findPromocodeByTelegramId(String.valueOf(update.getMessage().getChatId())).getValue();
             return messageSource.getMessage("already-has-prom", new Object[]{promocode}, Locale.ENGLISH);
         }
         else {

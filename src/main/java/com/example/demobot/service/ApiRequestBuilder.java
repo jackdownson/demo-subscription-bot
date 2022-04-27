@@ -17,6 +17,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+
+//TODO: resolve why @Value doesn't inject properly at start of service job
 public class ApiRequestBuilder {
 
     @Value("${telegram.api-request}")
@@ -36,7 +38,7 @@ public class ApiRequestBuilder {
 
         HttpEntity<BotUserDto> entity = new HttpEntity<>(new BotUserDto(chatId, user.getId().toString()));
         log.info("getchatMember request: {}", telegramApi + botToken + "/getChatMember");
-        ResponseEntity<String> response = template.exchange(telegramApi + botToken + "/getChatMember", HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = template.exchange("https://api.telegram.org/bot" + "5175383932:AAFkBSFTUQSU4o1o9Q4nIspzgOTMhJqIG1k" + "/getChatMember", HttpMethod.POST, entity, String.class);
         try {
             return getChatMember.deserializeResponse(response.getBody());
         } catch (TelegramApiRequestException e) {

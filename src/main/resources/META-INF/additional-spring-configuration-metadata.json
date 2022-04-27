@@ -1,0 +1,33 @@
+{
+  "properties": [
+    {
+      "name": "telegram.botToken",
+      "type": "java.lang.String",
+      "description": "Description for telegram.botToken."
+    },
+    {
+      "name": "telegram.botName",
+      "type": "java.lang.String",
+      "description": "Description for telegram.botName."
+    },
+    {
+      "name": "telegram.webhookPath",
+      "type": "java.lang.String",
+      "description": "Description for telegram.webhookPath."
+    },
+    {
+      "name": "telegram.api-request",
+      "type": "java.lang.String",
+      "description": "Description for telegram.api-request."
+    },
+    {
+      "name": "telegram.chat.id",
+      "type": "java.lang.String",
+      "description": "Description for telegram.chat.id."
+    },
+    {
+      "name": "telegram.chat.name",
+      "type": "java.lang.String",
+      "description": "Description for telegram.chat.name."
+    }
+  ] }
