@@ -22,6 +22,8 @@ public class BotUser {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+    @Column(name = "telegram_id")
+    private String telegramId;
 
     @Column(name = "username")
     private String username;
@@ -40,5 +42,6 @@ public class BotUser {
 
     @Column(name = "registration_date")
     private LocalDateTime registrationDate;
+
 
 }

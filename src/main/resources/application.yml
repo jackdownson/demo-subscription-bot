@@ -29,7 +29,7 @@ spring:
 telegram:
   botToken: "5175383932:AAFkBSFTUQSU4o1o9Q4nIspzgOTMhJqIG1k"
   botName: "Mon_Bon_Bot"
-  webhookPath: "https://sogresh-bot.herokuapp.com/"
+  webhookPath: "https://fcf0-188-32-83-182.ngrok.io"
   api-request: "https://api.telegram.org/bot"
   chat:
     id: "-1001688280930"

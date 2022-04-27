@@ -7,4 +7,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface BotUsersRepository extends JpaRepository<BotUser, String> {
 
+    BotUser findBotUserByTelegramId(String telegramId);
+
+
 }

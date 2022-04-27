@@ -9,5 +9,8 @@ public interface PromocodeRepository extends JpaRepository<Promocode, String> {
 
     Promocode findTopByRedeemedFalse();
 
+    Promocode findPromocodeByTelegramId(String telegramId);
+
+
 
 }

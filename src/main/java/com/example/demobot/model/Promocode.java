@@ -24,8 +24,14 @@ public class Promocode {
 
     @Column(name ="value")
     private String value;
+
     @Column(name ="redeem")
     private Boolean redeemed;
+
     @Column(name ="redeem_date")
     private LocalDateTime redeemDate;
+
+    @Column(name = "telegram_id")
+    private String telegramId;
+
 }

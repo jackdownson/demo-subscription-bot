@@ -2,6 +2,7 @@ package com.example.demobot.service;
 
 import com.example.demobot.dto.BotUserDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -15,12 +16,13 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ApiRequestBuilder {
 
     @Value("${telegram.api-request}")
-    private String telegramApi;
+    private static String telegramApi;
     @Value("${telegram.botToken}")
-    private String botToken;
+    private static String botToken;
 
     private final String GET_CHAT_MEMBER = telegramApi + botToken + "/getChatMember";
 
@@ -33,7 +35,8 @@ public class ApiRequestBuilder {
         RestTemplate template = new RestTemplate();
 
         HttpEntity<BotUserDto> entity = new HttpEntity<>(new BotUserDto(chatId, user.getId().toString()));
-        ResponseEntity<String> response = template.exchange(GET_CHAT_MEMBER, HttpMethod.POST, entity, String.class);
+        log.info("getchatMember request: {}", telegramApi + botToken + "/getChatMember");
+        ResponseEntity<String> response = template.exchange(telegramApi + botToken + "/getChatMember", HttpMethod.POST, entity, String.class);
         try {
             return getChatMember.deserializeResponse(response.getBody());
         } catch (TelegramApiRequestException e) {

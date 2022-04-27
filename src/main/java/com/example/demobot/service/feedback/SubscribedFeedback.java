@@ -1,7 +1,9 @@
 package com.example.demobot.service.feedback;
 
-import com.example.demobot.service.ApiRequestBuilder;
+import com.example.demobot.model.Promocode;
+import com.example.demobot.repository.PromocodeRepository;
 import com.example.demobot.service.RedeemProcessService;
+import com.example.demobot.service.SubscribeValidator;
 import com.example.demobot.util.FeedbackType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +12,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.ChatMember;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.User;
 
 import java.util.Locale;
 
@@ -22,47 +22,58 @@ import java.util.Locale;
 @RequiredArgsConstructor
 public class SubscribedFeedback implements FeedbackService {
 
-    @Value("${telegram.chat.id}")
-    private String chatId;
+
     @Value("${telegram.chat.name}")
     private String chatToSubscribe;
 
+    private final SubscribeValidator subscribeValidator;
     private final MessageSource messageSource;
-    private final ApiRequestBuilder apiRequest;
     private final RedeemProcessService redeemProcessService;
+    private final PromocodeRepository promocodeRepository;
 
-    public boolean validateIfSubscribed(User user) {
 
-        ChatMember chatMember = apiRequest.getChatMember(user, chatId);
-        String status = chatMember.getStatus();
-        return !status.equals("left");
-    }
 
 
     public SendMessage giveFeedback(Update update) {
-        Boolean isValid = validateIfSubscribed(update.getMessage().getFrom());
-        if (Boolean.TRUE.equals(isValid)) {
+        Boolean isSubscribed = subscribeValidator.validateIfSubscribed(update.getMessage());
+        Boolean isHasPromocode = subscribeValidator.isUserAlreadyHasPromocode(update.getMessage());
+
+        if (Boolean.TRUE.equals(isSubscribed) && !isHasPromocode) {
             SendMessage message = new SendMessage();
             message.setChatId(update.getMessage().getChatId());
-            message.setText(generateStringMessage(FeedbackType.POSITIVE));
+            message.setText(generateStringMessage(FeedbackType.POSITIVE, update));
 
             return message;
 
-        } else {
+        } else if (isSubscribed && isHasPromocode) {
             SendMessage message = new SendMessage();
             message.setChatId(update.getMessage().getChatId());
-            message.setText(generateStringMessage(FeedbackType.NEGATIVE));
+            message.setText(generateStringMessage(FeedbackType.ALREADY_HAS_PROM, update));
 
             return message;
+
+        } else if (!isSubscribed) {
+            SendMessage message = new SendMessage();
+            message.setChatId(update.getMessage().getChatId());
+            message.setText(generateStringMessage(FeedbackType.NEGATIVE, update));
+
+            return message;
+
         }
+        return new SendMessage();
     }
 
 
-    private String generateStringMessage(FeedbackType feedbackType) {
+    private String generateStringMessage(FeedbackType feedbackType, Update update) {
         if (feedbackType.equals(FeedbackType.POSITIVE)) {
-            String promocode = redeemProcessService.giveCouponAndRedeem().getValue();
+            String promocode = redeemProcessService.giveCouponAndRedeem(update).getValue();
             return messageSource.getMessage("positive-feedback", new Object[]{promocode}, Locale.ENGLISH);
-        } else {
+
+        } else if (feedbackType.equals(FeedbackType.ALREADY_HAS_PROM)) {
+            Promocode promocode = promocodeRepository.findPromocodeByTelegramId(String.valueOf(update.getMessage().getChatId()));
+            return messageSource.getMessage("already-has-prom", new Object[]{promocode}, Locale.ENGLISH);
+        }
+        else {
             return messageSource.getMessage("negative-feedback", new Object[]{chatToSubscribe}, Locale.ENGLISH);
         }
     }
