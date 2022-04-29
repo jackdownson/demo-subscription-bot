@@ -1,8 +1,9 @@
-package com.example.demobot.service;
+package com.example.demobot.service.validation;
 
 
 import com.example.demobot.model.Promocode;
 import com.example.demobot.repository.PromocodeRepository;
+import com.example.demobot.service.http.ApiRequestBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

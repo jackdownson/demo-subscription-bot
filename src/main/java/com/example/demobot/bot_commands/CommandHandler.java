@@ -1,7 +1,7 @@
 package com.example.demobot.bot_commands;
 
 
-import com.example.demobot.bot_commands.commands.BotCommand;
+import com.example.demobot.bot_commands.bot_commands.BotCommand;
 import com.example.demobot.service.feedback.SubscribedFeedback;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -28,9 +28,7 @@ public class CommandHandler {
 
         log.info("start handling");
 
-
         if (isCommand(update)) {
-            log.info("isCommand");
             BotCommand botCommand = commandContainer.retrieveCommand(getCommandName(update));
             return botCommand.execute(update);
         }

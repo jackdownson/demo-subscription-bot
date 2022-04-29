@@ -1,4 +1,4 @@
-package com.example.demobot.bot_commands.service;
+package com.example.demobot.service.bot_commands_s;
 
 import com.example.demobot.service.UserRegistrationService;
 import com.example.demobot.service.feedback.FeedbackService;
@@ -8,15 +8,15 @@ import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 
-@Service
 @Slf4j
+@Service("startBotMessageFeedback")
 public class StartCommandService {
 
     private final UserRegistrationService userRegistrationService;
     private final FeedbackService startBotMessageService;
 
     StartCommandService(UserRegistrationService userRegistrationService,
-    @Qualifier("startBotMessageFeedback")
+    @Qualifier("startBotMessageFeedbackService")
     FeedbackService startBotMessageService) {
         this.userRegistrationService = userRegistrationService;
         this.startBotMessageService = startBotMessageService;
@@ -24,7 +24,7 @@ public class StartCommandService {
 
     public SendMessage initUserWithFeedback(Update update) {
         userRegistrationService.register(update.getMessage().getFrom());
-        log.info("register - OK!");
+
         SendMessage sendMessage = startBotMessageService.giveFeedback(update);
         log.info("sendMessage {}", sendMessage);
         return startBotMessageService.giveFeedback(update);

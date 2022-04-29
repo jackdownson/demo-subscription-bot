@@ -1,4 +1,4 @@
-package com.example.demobot.service;
+package com.example.demobot.service.crud;
 
 import com.example.demobot.model.Promocode;
 import com.example.demobot.repository.PromocodeRepository;

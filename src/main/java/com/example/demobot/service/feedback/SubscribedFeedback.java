@@ -1,9 +1,8 @@
 package com.example.demobot.service.feedback;
 
-import com.example.demobot.model.Promocode;
 import com.example.demobot.repository.PromocodeRepository;
 import com.example.demobot.service.RedeemProcessService;
-import com.example.demobot.service.SubscribeValidator;
+import com.example.demobot.service.validation.SubscribeValidator;
 import com.example.demobot.util.FeedbackType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,31 +32,19 @@ public class SubscribedFeedback implements FeedbackService {
 
 
 
-
+    //todo: конечный автомат
     public SendMessage giveFeedback(Update update) {
         Boolean isSubscribed = subscribeValidator.validateIfSubscribed(update.getMessage());
-        Boolean isHasPromocode = subscribeValidator.isUserAlreadyHasPromocode(update.getMessage());
+        Boolean hasPromocode = subscribeValidator.isUserAlreadyHasPromocode(update.getMessage());
 
-        if (Boolean.TRUE.equals(isSubscribed) && !isHasPromocode) {
-            SendMessage message = new SendMessage();
-            message.setChatId(update.getMessage().getChatId());
-            message.setText(generateStringMessage(FeedbackType.POSITIVE, update));
+        if (isSubscribed && !hasPromocode) {
+            return generateSendMessage(update, FeedbackType.POSITIVE);
 
-            return message;
-
-        } else if (isSubscribed && isHasPromocode) {
-            SendMessage message = new SendMessage();
-            message.setChatId(update.getMessage().getChatId());
-            message.setText(generateStringMessage(FeedbackType.ALREADY_HAS_PROM, update));
-
-            return message;
+        } else if (isSubscribed && hasPromocode) {
+            return generateSendMessage(update, FeedbackType.ALREADY_HAS_PROM);
 
         } else if (!isSubscribed) {
-            SendMessage message = new SendMessage();
-            message.setChatId(update.getMessage().getChatId());
-            message.setText(generateStringMessage(FeedbackType.NEGATIVE, update));
-
-            return message;
+            return generateSendMessage(update, FeedbackType.NEGATIVE);
 
         }
         return new SendMessage();
@@ -76,6 +63,15 @@ public class SubscribedFeedback implements FeedbackService {
         else {
             return messageSource.getMessage("negative-feedback", new Object[]{chatToSubscribe}, Locale.ENGLISH);
         }
+    }
+
+    private SendMessage generateSendMessage(Update update, FeedbackType feedbackType){
+        SendMessage message = new SendMessage();
+        message.setChatId(update.getMessage().getChatId());
+        message.setText(generateStringMessage(feedbackType, update));
+        message.enableMarkdown(true);
+
+        return message;
     }
 
 }

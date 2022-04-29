@@ -5,12 +5,13 @@ import com.example.demobot.model.BotUser;
 import com.example.demobot.repository.BotUsersRepository;
 import com.example.demobot.service.crud.BotUserCrudService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.User;
 
 import java.time.LocalDateTime;
 
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserRegistrationServiceImpl implements UserRegistrationService {
@@ -20,12 +21,15 @@ public class UserRegistrationServiceImpl implements UserRegistrationService {
 
     @Override
     public void register(User user) {
-        BotUser botUser = userMapper.toEntity(user);
-        botUser.setRegistrationDate(LocalDateTime.now());
-        botUserCrudService.save(botUser);
+        if (botUserCrudService.getByTelegramId(user.getId()) == null) {
+            BotUser botUser = userMapper.toEntity(user);
+            botUser.setRegistrationDate(LocalDateTime.now());
+            botUserCrudService.save(botUser);
+            log.info("register - OK!");
+        }
+
 
     }
-
 
 
 }

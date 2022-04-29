@@ -1,14 +1,14 @@
 package com.example.demobot.bot_commands;
 
 
-import com.example.demobot.bot_commands.commands.BotCommand;
-import com.example.demobot.bot_commands.commands.CommandName;
-import com.example.demobot.bot_commands.commands.InfoCommand;
-import com.example.demobot.bot_commands.commands.StartCommand;
-import com.example.demobot.bot_commands.commands.UnknownCommand;
-import com.example.demobot.bot_commands.service.InfoCommandService;
-import com.example.demobot.bot_commands.service.StartCommandService;
-import com.example.demobot.bot_commands.service.UnknownCommandService;
+import com.example.demobot.bot_commands.bot_commands.BotCommand;
+import com.example.demobot.bot_commands.bot_commands.CommandName;
+import com.example.demobot.bot_commands.bot_commands.InfoCommand;
+import com.example.demobot.bot_commands.bot_commands.StartCommand;
+import com.example.demobot.bot_commands.bot_commands.UnknownCommand;
+import com.example.demobot.service.bot_commands_s.InfoCommandService;
+import com.example.demobot.service.bot_commands_s.StartCommandService;
+import com.example.demobot.service.bot_commands_s.UnknownCommandService;
 import com.google.common.collect.ImmutableMap;
 import org.springframework.stereotype.Component;
 
@@ -23,8 +23,8 @@ public class CommandContainer {
                             UnknownCommandService unknownCommandService) {
         unknownCommand = new UnknownCommand(unknownCommandService);
         commandMap = ImmutableMap.<String, BotCommand>builder()
-                .put(CommandName.START.getCommandName(), new StartCommand(startCommandService))
-                .put(CommandName.INFO.getCommandName(), new InfoCommand(infoCommandService))
+                .put(CommandName.START.getCommand(), new StartCommand(startCommandService))
+                .put(CommandName.INFO.getCommand(), new InfoCommand(infoCommandService))
                 .build();
     }
 

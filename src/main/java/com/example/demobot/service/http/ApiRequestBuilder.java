@@ -1,4 +1,4 @@
-package com.example.demobot.service;
+package com.example.demobot.service.http;
 
 import com.example.demobot.dto.BotUserDto;
 import lombok.RequiredArgsConstructor;
@@ -14,19 +14,19 @@ import org.telegram.telegrambots.meta.api.objects.ChatMember;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiRequestException;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
-@Slf4j
-
 //TODO: resolve why @Value doesn't inject properly at start of service job
 public class ApiRequestBuilder {
 
     @Value("${telegram.api-request}")
-    private static String telegramApi;
+    private String telegramApi;
     @Value("${telegram.botToken}")
-    private static String botToken;
+    private String botToken;
 
-    private final String GET_CHAT_MEMBER = telegramApi + botToken + "/getChatMember";
+    @Value("${telegram.api-request}" + "${telegram.botToken}" + "/getChatMember")
+    private String GET_CHAT_MEMBER;
 
     public ChatMember getChatMember(User user, String chatId) {
 
@@ -37,8 +37,7 @@ public class ApiRequestBuilder {
         RestTemplate template = new RestTemplate();
 
         HttpEntity<BotUserDto> entity = new HttpEntity<>(new BotUserDto(chatId, user.getId().toString()));
-        log.info("getchatMember request: {}", telegramApi + botToken + "/getChatMember");
-        ResponseEntity<String> response = template.exchange("https://api.telegram.org/bot" + "5175383932:AAFkBSFTUQSU4o1o9Q4nIspzgOTMhJqIG1k" + "/getChatMember", HttpMethod.POST, entity, String.class);
+        ResponseEntity<String> response = template.exchange(GET_CHAT_MEMBER, HttpMethod.POST, entity, String.class);
         try {
             return getChatMember.deserializeResponse(response.getBody());
         } catch (TelegramApiRequestException e) {

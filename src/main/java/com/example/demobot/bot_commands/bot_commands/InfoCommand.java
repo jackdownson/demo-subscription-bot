@@ -1,7 +1,6 @@
-package com.example.demobot.bot_commands.commands;
+package com.example.demobot.bot_commands.bot_commands;
 
-import com.example.demobot.bot_commands.service.InfoCommandService;
-import jdk.jfr.Registered;
+import com.example.demobot.service.bot_commands_s.InfoCommandService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
