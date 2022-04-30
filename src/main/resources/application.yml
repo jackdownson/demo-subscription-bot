@@ -10,9 +10,10 @@ logging:
 spring:
   datasource:
 #    type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5433/postgres
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://ec2-34-242-8-97.eu-west-1.compute.amazonaws.com:5432/d7dscukf6o6vbn
+
+    username: sctuiqykyeouro
+    password: dac43133dc436740f6f58e8716060aba054f48e5259390eff158195b318bfc33
 #    hikari:
 #      minimum-idle: 10
 #      maximum-pool-size: 60
@@ -29,7 +30,7 @@ spring:
 telegram:
   botToken: "5175383932:AAFkBSFTUQSU4o1o9Q4nIspzgOTMhJqIG1k"
   botName: "Mon_Bon_Bot"
-  webhookPath: "https://fcf0-188-32-83-182.ngrok.io"
+  webhookPath: "https://sogresh-bot.herokuapp.com/"
   api-request: "https://api.telegram.org/bot"
   chat:
     id: "-1001688280930"
